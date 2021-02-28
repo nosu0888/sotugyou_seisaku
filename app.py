@@ -25,3 +25,12 @@ def regist_post():
     c.close()
 
     return "アカウント登録完了！"
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return "お探しのページは見つかりませんでした"
+
+if __name__ == "__main__":
+    app.run(debug=True)
+    # 開発者モードで起動！！
+

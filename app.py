@@ -10,15 +10,15 @@ def regist_get():
 
 @app.route('/regist' , methods=["POST"])
 def regist_post():
-    input_name = request.form.get("member_name")
     input_password = request.form.get("member_password")
-
+    input_name = request.form.get("member_name")
+    
     # flasktest.dbに接続
-    conn = sqlite3.connect("flasktest.db")
+    conn = sqlite3.connect("airi.db")
     # DBの中を操作できるようにする
     c = conn.cursor()
     # SQLを実行（DBから値を取得）
-    c.execute("insert into member values(null , ? , ?)",(input_name, input_password))
+    c.execute("insert into users values(null , ? , ? , null , null ,null)",(input_password, input_name))
     # DBの変更内容保存する
     conn.commit()
     # DBとの接続を終える

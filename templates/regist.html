@@ -8,9 +8,9 @@
 
   <body>
     <form action="/add" method="POST">
-        ID：<input type="text" size = "100" maxlength="50" name="task"><br>
-        パスワード：<input type="text" size = "100" maxlength="50" name="task"><br>
-        名前：<input type="text" size = "100" maxlength="50" name="task"><br>
+        ID：<input type="text" size = "100" maxlength="50"><br>
+        パスワード：<input type="text" size = "100" maxlength="50" name="member_password"><br>
+        名前：<input type="text" size = "100" maxlength="50" name="member_name"><br>
     </form>
 
     <select name="genre" id="genre" onchange="createMenu(this.value)">
@@ -32,7 +32,7 @@
       <option value="italianFoods">30代</option>
     </select><br>
 
-    <a href="./result.html" class="reset flat fade">新規登録</a>
+    <a href="result.html" class="reset flat fade">新規登録</a>
   </body>
 
 </html>

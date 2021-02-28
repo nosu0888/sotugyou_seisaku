@@ -13,10 +13,11 @@
         <div class="logo">
             <img src="../img/logo.png" alt="">
         </div>
-        <form action="/login" method="post">
-            ID ：<input type="text" name="name"><br>
-            PASS：<input type="password" name="password"><br>
-            <a href="search.html">送信</a>
+        <form action="/login" method="POST">
+            <p>名前 ：<input type="text" name="member_name"></p>
+            <p>PASS：<input type="password" name="member_password"></p>
+
+            <input type="submit" name="save" value="ログイン">
             <input type="submit" value="新規登録">
         </form>
     </body>

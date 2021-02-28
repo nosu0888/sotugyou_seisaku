@@ -7,24 +7,13 @@
   </head>
 
   <body>
-    <select name="genre" id="genre" onchange="createMenu(this.value)">
-      <option disabled selected>趣味</option>
-      <option value="japaneseFoods">料理</option>
-      <option value="chineseFoods">スポーツ</option>
-      <option value="italianFoods">釣り</option>
-    </select>
-    <select name="genre" id="genre" onchange="createMenu(this.value)">
-      <option disabled selected>住まい</option>
-      <option value="japaneseFoods">沖縄</option>
-      <option value="chineseFoods">東京</option>
-      <option value="italianFoods">大阪</option>
-    </select>
-    <select name="genre" id="genre" onchange="createMenu(this.value)">
-      <option disabled selected>年齢</option>
-      <option value="japaneseFoods">10代</option>
-      <option value="chineseFoods">20代</option>
-      <option value="italianFoods">30代</option>
-    </select>
+    <form action="/result" method="POST">
+      <p>趣味：<input type="text" name="member_syumi"></p>
+      <p>所在地：<input type="text" name="member_location"></p>
+      <p>年齢：<input type="text"  name="member_age"></p>
+
+      <input type="submit" name="save" value="検索">
+    </form>
 
     <a href="./result.html" class="reset flat fade">検索</a>
   </body>

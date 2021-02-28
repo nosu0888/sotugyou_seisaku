@@ -1,0 +1,13 @@
+@charset "UTF-8";
+html {
+	overflow-y: scroll; 
+}
+
+body{
+    background-color: #F5E1DA;
+}
+
+h1{
+    text-align: center;
+}
+

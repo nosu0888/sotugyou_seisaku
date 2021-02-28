@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <link rel="stylesheet" type="text/css" media="screen and ( max-width:768px )" href="../css/search.css">
+
+  <head>
+    <meta charset="UTF-8">
+  </head>
+
+  <body>
+    <form action="/add" method="POST">
+        ID：<input type="text" size = "100" maxlength="50" name="task"><br>
+        パスワード：<input type="text" size = "100" maxlength="50" name="task"><br>
+        名前：<input type="text" size = "100" maxlength="50" name="task"><br>
+    </form>
+
+    <select name="genre" id="genre" onchange="createMenu(this.value)">
+      <option disabled selected>趣味</option>
+      <option value="japaneseFoods">料理</option>
+      <option value="chineseFoods">スポーツ</option>
+      <option value="italianFoods">釣り</option>
+    </select>
+    <select name="genre" id="genre" onchange="createMenu(this.value)">
+      <option disabled selected>住まい</option>
+      <option value="japaneseFoods">沖縄</option>
+      <option value="chineseFoods">東京</option>
+      <option value="italianFoods">大阪</option>
+    </select>
+    <select name="genre" id="genre" onchange="createMenu(this.value)">
+      <option disabled selected>年齢</option>
+      <option value="japaneseFoods">10代</option>
+      <option value="chineseFoods">20代</option>
+      <option value="italianFoods">30代</option>
+    </select><br>
+
+    <a href="./result.html" class="reset flat fade">新規登録</a>
+  </body>
+
+</html>

@@ -275,21 +275,42 @@ def get_save_path():
     return path_dir
 
 
-# ---------chat機能---------
+# ---------ここからchat機能---------
 
 @app.route("/chatroom")
 def chatroom():
     #ここにチャットルーム一覧をDBからとって、表示するプログラム
 
+    # flasktest.dbに接続
+    conn = sqlite3.connect("service.db")
+    # DBの中を操作できるようにする
+    c = conn.cursor()
+    # SQLを実行（DBから値を取得）
+    c.execute("select chat_id, to_user_id, from_user_id, message from uchatmessage where id = 1")
+    # 取得した値を変数に代入
+    user_info = c.fetchone()
+    # DBとの接続を終える
+    c.close()
+    # DBから値が取れているかターミナル上で確認
+    print(user_info)
+
+    return render_template("dbtest.html", tpl_user_info=user_info)
+
+
 @app.route("/chat/<int:id>")
 def chat_get():
     #ここにチャットをDBからとって、表示するプログラム
+
+    return render_template("dbtest.html", tpl_user_info=user_info)
+
 
 @app.route("/chat/<int:id>", methods=["POST"])
 def chat_post():
     #ここにチャットの送信ボタンが押された時にDBに格納するプログラム
 
-# --------------------------
+    return render_template("dbtest.html", tpl_user_info=user_info)
+
+# ---------ここまでchat機能---------
 
 
 @app.errorhandler(403)

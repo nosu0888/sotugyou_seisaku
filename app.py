@@ -15,6 +15,10 @@ from datetime import datetime
 def index():
     return render_template('index.html')
 
+@app.route('/result')
+def result():
+    return render_template('result.html')
+
 
 # GET  /register => 登録画面を表示
 # POST /register => 登録処理をする
@@ -269,6 +273,23 @@ def get_save_path():
 def get_save_path():
     path_dir = "./static/img"
     return path_dir
+
+
+# ---------chat機能---------
+
+@app.route("/chatroom")
+def chatroom():
+    #ここにチャットルーム一覧をDBからとって、表示するプログラム
+
+@app.route("/chat/<int:id>")
+def chat_get():
+    #ここにチャットをDBからとって、表示するプログラム
+
+@app.route("/chat/<int:id>", methods=["POST"])
+def chat_post():
+    #ここにチャットの送信ボタンが押された時にDBに格納するプログラム
+
+# --------------------------
 
 
 @app.errorhandler(403)

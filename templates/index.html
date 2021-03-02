@@ -2,45 +2,47 @@
 
 {% block content %}
 
-	<article>
-		<section id="sec1">
-			<!-- <h1>月木でわかる <br> HTML5 &amp; CSS3</h1> -->
-		</section>
-		<p>Relation make you happy</p>
+<article>
+	<section id="sec1">
+		<!-- <h1>月木でわかる <br> HTML5 &amp; CSS3</h1> -->
+	</section>
+	<p>Relation make you happy</p>
 
-		<div>
+	<div>
 
-			<form action="/register" method="post" name="form1">
-				<table>
-					<tr>
-						<th>名前</th>
-						<td><input name="name" type="text"></td>
-				    </tr>
-					<tr>
-						<th>PASS</th>
-						<td><input name="pass" type="pass"></td>
-					</tr>
-				</table>
-	
+		<form action="/register" method="post" name="form1">
+			<table>
+				<tr>
+					<th>名前</th>
+					<td><input name="name" type="text"></td>
+				</tr>
+				<tr>
+					<th>PASS</th>
+					<td><input name="pass" type="pass"></td>
+				</tr>
+			</table>
 
-			</form>
-			
-			<div id="submitbtn"> 
+
+			<div id="submitbtn">
 				<a href="/register" class="btn">NEW</a>
 				<a href="javascript:submit()" class="btn">LOGIN</a>
-			</div> 
+				<button onclick="location.href='./register'">登録</button>
 
 			</div>
-			
+
+	</div>
 
 
-	</article>
+	</form>
 
-	<script>
-		function submit() {
-  form1.submit();
-  
-}
-	</script>
+
+</article>
+
+<script>
+	function submit() {
+		form1.submit();
+
+	}
+</script>
 
 {% endblock %}

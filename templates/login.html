@@ -1,25 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block content %}
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=1">
-        <link rel="stylesheet" type="text/css" media="screen and ( max-width:768px )" href="../css/login.css">
-        <title>CatchUp</title>
-    </head>
+<form action="/login" method="post">
+  ID：<input type="text" name="name"><br>
+  PASS：<input type="password" name="password"><br>
+  <input type="submit" name="rogue" value="ログイン">
+</form>
 
-    <body>
-        <div class="logo">
-            <img src="../img/logo.png" alt="">
-        </div>
-        <form action="/login" method="POST">
-            <p>名前 ：<input type="text" name="member_name"></p>
-            <p>PASS：<input type="password" name="member_password"></p>
+{% endblock %}
 
-            <input type="submit" name="save" value="ログイン">
-            <input type="submit" value="新規登録">
-        </form>
-    </body>
 
-</html>

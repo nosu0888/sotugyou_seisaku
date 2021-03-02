@@ -1,21 +1,34 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <link rel="stylesheet" type="text/css" media="screen and ( max-width:768px )" href="../css/search.css">
+{% extends 'base.html' %}
+{% block content %}
 
-  <head>
-    <meta charset="UTF-8">
-  </head>
+<header>
+    <h1>検索</h1>
+</header>
 
-  <body>
-    <form action="/result" method="POST">
-      <p>趣味：<input type="text" name="member_syumi"></p>
-      <p>所在地：<input type="text" name="member_location"></p>
-      <p>年齢：<input type="text"  name="member_age"></p>
 
-      <input type="submit" name="save" value="検索">
-    </form>
+<table>
+    <tr>
+        <th>趣味</th>
+        <td><input name="name" type="text"></td>
+    </tr>
+    <tr>
+        <th>住まい</th>
+        <td><input name="name" type="text"></td>
+    </tr>
+    <tr>
+        <th>年齢</th>
+        <td><input name="name" type="text"></td>
+    </tr>
+</table>
 
-    <a href="./result.html" class="reset flat fade">検索</a>
-  </body>
+<footer>
+    <ul>
+        <a href="/bbs"><li class="fas fa-search"></li></a>
+        <li class="far fa-comment-dots"><a href="#sec2"></a></li>
+        <li class="far fa-user-circle"><a href="#sec3"></a></li>
+    </ul>
+</footer>
 
-</html>
+
+
+{% endblock %}

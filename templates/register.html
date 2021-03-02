@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<header>
+  <h1>新規登録画面</h1>
+</header>
+<img src="/static/img/{{user_info[1]}}" alt="">
+
+<form action="/upload" method="POST" enctype="multipart/form-data"></form>
+  <input type="file" name="upload"><br>
+  <input type="submit" value="画像アップロード"><br>
+
+<div>
+<form action="/register" method="post">
+  <table>
+    <tr>
+      <th>名前</th>
+      <td><input name="name" type="text"></td>
+      </tr>
+      <tr>
+        <th>PASS</th>
+        <td><input name="pass" type="pass"></td>
+      </tr>
+      <tr>
+        <th>住まい</th>
+        <td><input name="pass" type="pass"></td>
+      </tr>
+      <tr>
+        <th>年齢</th>
+        <td><input name="pass" type="pass"></td>
+      </tr>
+      <tr>
+        <th>性別</th>
+        <td><input name="pass" type="pass"></td>
+      </tr>
+      <tr>
+        <th>趣味①</th>
+        <td><input name="pass" type="pass"></td>
+      </tr>
+      <tr>
+        <th>趣味②</th>
+        <td><input name="pass" type="pass"></td>
+      </tr>
+      </table>
+
+
+  <input type="submit" name="save" value="登録">
+</form>
+
+<a href="/login">登録されている方はこちら</a>
+
+</div>
+
+{% endblock %}

@@ -15,6 +15,10 @@ from datetime import datetime
 def index():
     return render_template('index.html')
 
+@app.route('/result')
+def result():
+    return render_template('result.html')
+
 
 # GET  /register => 登録画面を表示
 # POST /register => 登録処理をする

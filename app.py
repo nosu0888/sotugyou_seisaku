@@ -275,9 +275,31 @@ def get_save_path():
     return path_dir
 
 
+# ---------chat機能---------
+
+@app.route("/chatroom")
+def chatroom():
+    #ここにチャットルーム一覧をDBからとって、表示するプログラム
+    return render_template("dbtest.html", tpl_user_info=user_info)
+
+@app.route("/chat/<int:id>")
+def chat_get():
+    return render_template("dbtest.html", tpl_user_info=user_info)
+
+    #ここにチャットをDBからとって、表示するプログラム
+
+@app.route("/chat/<int:id>", methods=["POST"])
+def chat_post():
+    #ここにチャットの送信ボタンが押された時にDBに格納するプログラム
+    return render_template("dbtest.html", tpl_user_info=user_info)
+
+# --------------------------
+
+
 @app.errorhandler(403)
 def mistake403(code):
     return 'There is a mistake in your url!'
+
 
 
 @app.errorhandler(404)
@@ -288,4 +310,4 @@ def notfound(code):
 # __name__ というのは、自動的に定義される変数で、現在のファイル(モジュール)名が入ります。 ファイルをスクリプトとして直接実行した場合、 __name__ は __main__ になります。
 if __name__ == "__main__":
     # Flask が持っている開発用サーバーを、実行します。
-    app.run( host='0.0.0.0', port=80 , debug=False)
+    app.run( host='0.0.0.0', port=80 , debug=True)

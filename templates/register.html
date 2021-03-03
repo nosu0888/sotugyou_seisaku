@@ -10,15 +10,16 @@
 
 
 
-<div class="kawa">
-<form action="/register" method="post">
-  
-  <input type="file" name="avatar">
+<div class="main">
+  <form action="/register" method="post">
 
-  <table>
-    <tr>
-      <th>名前</th>
-      <td><input name="name" type="text"></td>
+    <input type="file" name="avatar">
+
+    <table>
+      <tr>
+        <th>名前</th>
+        <td><input name="name" type="text"></td>
+
       </tr>
       <tr>
         <th>PASS</th>
@@ -44,14 +45,21 @@
         <th>趣味②</th>
         <td><input name="hobby_2" type="text"></td>
       </tr>
-      </table>
+    </table>
+
+    <input type="submit" name="save" value="登録">
+  </form>
 
 
-  <input type="submit" name="save" value="登録">
 
-</form>
 
-<!-- <a href="/login">登録されている方はこちら</a> -->
+  <a href="/login">登録されている方はこちら</a>
+
+  <!-- <a href="/login">登録されている方はこちら</a> -->
+
+
+  <!-- <a href="/login">登録されている方はこちら</a> -->
+
 
 </div>
 

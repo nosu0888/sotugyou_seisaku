@@ -86,34 +86,34 @@ def register_post():
 
 # GET  /login => ログイン画面を表示
 # POST /login => ログイン処理をする
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "GET":
-        if 'user_id' in session :
-            return redirect("/bbs")
-        else:
-            return render_template("login.html")
-    else:
-        # ブラウザから送られてきたデータを受け取る
-        name = request.form.get("name")
-        password = request.form.get("password")
+# @app.route("/login", methods=["GET", "POST"])
+# def login():
+#     if request.method == "GET":
+#         if 'user_id' in session :
+#             return redirect("/bbs")
+#         else:
+#             return render_template("login.html")
+#     else:
+#         # ブラウザから送られてきたデータを受け取る
+#         name = request.form.get("name")
+#         password = request.form.get("password")
 
-        # ブラウザから送られてきた name ,password を userテーブルに一致するレコードが
-        # 存在するかを判定する。レコードが存在するとuser_idに整数が代入、存在しなければ nullが入る
-        conn = sqlite3.connect('service.db')
-        c = conn.cursor()
-        c.execute("select id from user where name = ? and password = ?", (name, password) )
-        user_id = c.fetchone()
-        conn.close()
-        # DBから取得してきたuser_id、ここの時点ではタプル型
-        print(type(user_id))
-        # user_id が NULL(PythonではNone)じゃなければログイン成功
-        if user_id is None:
-            # ログイン失敗すると、ログイン画面に戻す
-            return render_template("login.html")
-        else:
-            session['user_id'] = user_id[0]
-            return redirect("/bbs")
+#         # ブラウザから送られてきた name ,password を userテーブルに一致するレコードが
+#         # 存在するかを判定する。レコードが存在するとuser_idに整数が代入、存在しなければ nullが入る
+#         conn = sqlite3.connect('service.db')
+#         c = conn.cursor()
+#         c.execute("select id from user where name = ? and password = ?", (name, password) )
+#         user_id = c.fetchone()
+#         conn.close()
+#         # DBから取得してきたuser_id、ここの時点ではタプル型
+#         print(type(user_id))
+#         # user_id が NULL(PythonではNone)じゃなければログイン成功
+#         if user_id is None:
+#             # ログイン失敗すると、ログイン画面に戻す
+#             return render_template("login.html")
+#         else:
+#             session['user_id'] = user_id[0]
+#             return redirect("/bbs")
 
 
 @app.route("/logout")
@@ -331,7 +331,7 @@ def jump():
 def chatroom_get():
     my_id = session["user_id"]
     # ここにチャットルーム一覧をDBからとって、表示するプログラム
-    conn = sqlite3.connect('chattest.db')
+    conn = sqlite3.connect('service.db')
     c = conn.cursor()
     c.execute(
         "select id, room from chat where user_id1 = ? or user_id2 = ?", (my_id, my_id))
@@ -346,7 +346,7 @@ def chatroom_post(other_id):
     # まずはチャットルームがあるかchatidをとってくる
     my_id = session["user_id"]
     print(my_id)
-    conn = sqlite3.connect('chattest.db')
+    conn = sqlite3.connect('service.db')
     c = conn.cursor()
     c.execute(
         "select id from chat where (user_id1 = ? and user_id2 = ?) or (user_id1 = ? and user_id2 = ?)", (my_id, other_id, other_id, my_id))
@@ -376,7 +376,7 @@ def chatroom_post(other_id):
 @app.route("/chat/<int:chatid>")
 def chat_get(chatid):
     # ここにチャットをDBからとって、表示するプログラム
-    conn = sqlite3.connect('chattest.db')
+    conn = sqlite3.connect('service.db')
     c = conn.cursor()
     c.execute(
         "select chatmess.to_user, chatmess.from_user, chatmess.message, user.name from chatmess inner join user on chatmess.from_user = user.id where chat_id = ?", (chatid,))
@@ -396,7 +396,7 @@ def chat_post(chatid):
     # ここにチャットの送信ボタンが押されたときにDBに格納するプログラム
     my_id = session["user_id"]
     chat_message = request.form.get("input_message")
-    conn = sqlite3.connect('chattest.db')
+    conn = sqlite3.connect('service.db')
     c = conn.cursor()
     c.execute(
         "select user_id1, user_id2 from chat where id = ?", (chatid,))
@@ -418,7 +418,7 @@ def chat_post(chatid):
 @app.route("/userlist")
 def chat():
     if "user_id" in session:
-        conn = sqlite3.connect('chattest.db')
+        conn = sqlite3.connect('service.db')
         c = conn.cursor()
         c.execute("select id, name from user")
         user_info = c.fetchall()
@@ -426,6 +426,37 @@ def chat():
         return render_template("userlist.html", tpl_user_info=user_info)
     else:
         redirect("/login")
+
+
+@app.route("/login")
+def login_get():
+    return render_template("login.html")
+
+
+@app.route("/login", methods=["POST"])
+def login():
+    # ブラウザから送られてきたデータを受け取る
+    name = request.form.get("name")
+    password = request.form.get("password")
+
+    # ブラウザから送られてきた name ,password を userテーブルに一致するレコードが
+    # 存在するかを判定する。レコードが存在するとuser_idに整数が代入、存在しなければ nullが入る
+    conn = sqlite3.connect('service.db')
+    c = conn.cursor()
+    c.execute(
+        "select id from user where name = ? and password = ?", (name, password))
+    user_id = c.fetchone()
+    conn.close()
+    # DBから取得してきたuser_id、ここの時点ではタプル型
+    print(type(user_id))
+    # user_id が NULL(PythonではNone)じゃなければログイン成功
+    if user_id is None:
+        # ログイン失敗すると、ログイン画面に戻す
+        return render_template("login.html")
+    else:
+        session['user_id'] = user_id[0]
+        return redirect("/userlist")
+
 
 # ---------ここまでchat機能---------
 

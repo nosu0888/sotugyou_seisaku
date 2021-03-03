@@ -270,8 +270,34 @@ def del_task():
 
 
 @app.route('/search')
-def search():
+def search_get():
     return render_template("search.html")
+
+@app.route("/search", methods=["POST"])
+def search():
+    # ブラウザから送られてきたデータを受け取る
+    hobby = request.form.get("hobby")
+    address = request.form.get("address")
+    age = request.form.get("age")
+
+    # ブラウザから送られてきた name ,password を userテーブルに一致するレコードが
+    # 存在するかを判定する。レコードが存在するとuser_idに整数が代入、存在しなければ nullが入る
+    conn = sqlite3.connect('service.db')
+    c = conn.cursor()
+    c.execute(
+        "select id from user where hobby = ? and address = ? and age = ?", (hobby_1, address, age)
+    user_result = c.fetchall()
+    conn.close()
+    # DBから取得してきたuser_id、ここの時点ではタプル型
+    # print(type(user_id))
+
+    # user_id が NULL(PythonではNone)じゃなければログイン成功
+    # if user_id is None:
+    #     # ログイン失敗すると、ログイン画面に戻す
+    #     return render_template("login.html")
+    # else:
+    #     session['user_id'] = user_id[0]
+    #     return redirect("/userlist")
 
 
 @app.route("/message")

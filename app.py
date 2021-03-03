@@ -2,7 +2,7 @@ import os
 # splite3をimportする
 import sqlite3
 # flaskをimportしてflaskを使えるようにする
-from flask import Flask , render_template , request , redirect , session
+from flask import *
 # appにFlaskを定義して使えるようにしています。Flask クラスのインスタンスを作って、 app という変数に代入しています。
 app = Flask(__name__)
 
@@ -22,28 +22,66 @@ def result():
 
 # GET  /register => 登録画面を表示
 # POST /register => 登録処理をする
-@app.route('/register',methods=["GET", "POST"])
-def register():
-    #  登録ページを表示させる
-    if request.method == "GET":
-        if 'user_id' in session :
-            return redirect ('/bbs')
-        else:
-            return render_template("register.html")
+# @app.route('/register',methods=["GET", "POST"])
+# def register():
+#     #  登録ページを表示させる
+#     if request.method == "GET":
+#         if 'user_id' in session :
+#             return redirect ('/bbs')
+#         else:
+#             return render_template("register.html")
 
-    # ここからPOSTの処理
-    else:
-        # 登録ページで登録ボタンを押した時に走る処理
-        name = request.form.get("name")
-        password = request.form.get("password")
+#     # ここからPOSTの処理
+#     else:
+#         # 登録ページで登録ボタンを押した時に走る処理
+#         name = request.form.get("name")
+#         password = request.form.get("password")
+#         addrss = request.form.get("addrss")
+#         age = request.form.get("age")
+#         sex = request.form.get("sex")
+#         hobby1 = request.form.get("hobby1")
+#         hobby2 = request.form.get("hobby2")
 
-        conn = sqlite3.connect('service.db')
-        c = conn.cursor()
-        # 課題4の答えはここ
-        c.execute("insert into user values(null,?,?,'no_img.png')", (name,password))
-        conn.commit()
-        conn.close()
-        return redirect('/login')
+#         conn = sqlite3.connect('service.db')
+#         c = conn.cursor()
+#         # 課題4の答えはここ
+#         c.execute("insert into user values(null,?,?,?,?,?,?,?)", (name,password,addrss,age,sex,hobby1,hobby2))
+#         conn.commit()
+#         conn.close()
+#         return redirect('/login')
+
+#川満追加
+@app.route("/register")
+def regist_get():
+    return render_template("register.html")
+
+@app.route("/register", methods=["post"])
+def register_post():
+    input_name = request.form.get("name")
+    input_password = request.form.get("password")
+    input_addrss = request.form.get("addrss")
+    input_age = request.form.get("age")
+    input_sex = request.form.get("sex")
+    input_hobby_1 = request.form.get("hobby_1")
+    input_hobby_2 = request.form.get("hobby_2")
+    conn = sqlite3.connect('service.db')
+    c = conn.cursor()
+    c.execute("insert into user values(null, ?,?,?,?,?,?,?,'no_img.png')",(input_name,input_password,input_addrss,input_age,input_sex,input_hobby_1,input_hobby_2))
+    conn.commit()
+    c.close()
+
+    return render_template("search.html")
+
+
+
+
+
+
+
+
+
+
+
 
 
 # GET  /login => ログイン画面を表示
@@ -82,7 +120,7 @@ def login():
 def logout():
     session.pop('user_id',None)
     # ログアウト後はログインページにリダイレクトさせる
-    return redirect("/login")
+    return render_template("index.html")
 
 
 @app.route('/bbs')
@@ -231,6 +269,12 @@ def search():
     return render_template("search.html")
 
 
+@app.route("/message")
+def message():
+    return render_template("message.html")
+
+
+
 #画像表示にする
 # @app.route('/upload',method=['POST'])
 # def upload():
@@ -251,7 +295,7 @@ def search():
 #     c.execute("update user set prof_img =? where id = ?",(filename,user_id))
 #     conn.commit()
 #     c.close()
-    return redirect('/bbs')
+    # return redirect('/bbs')
 
 
 
@@ -326,4 +370,8 @@ def notfound(code):
 # __name__ というのは、自動的に定義される変数で、現在のファイル(モジュール)名が入ります。 ファイルをスクリプトとして直接実行した場合、 __name__ は __main__ になります。
 if __name__ == "__main__":
     # Flask が持っている開発用サーバーを、実行します。
+<<<<<<< HEAD
     app.run( host='0.0.0.0', port=80 , debug=True )
+=======
+    app.run( host='0.0.0.0', port=80 , debug=True)
+>>>>>>> b48988f559c8bdcfb7866f0bffba1411d6303823

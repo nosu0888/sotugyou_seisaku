@@ -52,6 +52,7 @@ body {
 	font-family: "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, "メイリオ", "Meiryo", "HGPｺﾞｼｯｸM", "Osaka", "ＭＳ Ｐゴシック", sans-serif, Century Gothic, Arial;
 }
 
+
 /*ドロワー用でコメントアウト or 削除*/
 
 /*header {
@@ -117,6 +118,15 @@ footer {
 footer ul li {
 	padding: 15px 30px 10px 30px;
 	font-size: 50px;
+}
+
+header {
+	padding: 40px;
+	/* background: #f3f38c; */
+}
+
+.kawa {
+	background: #f3f38c;
 }
 
 section {
@@ -239,5 +249,4 @@ form {
 	margin: 10px 0;
 }
 
-*/
 */

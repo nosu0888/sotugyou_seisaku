@@ -15,9 +15,22 @@ from datetime import datetime
 def index():
     return render_template("index.html")
 
-@app.route('/result')
+# @app.route('/result')
+# def result():
+#     return render_template('result.html')
+
+@app.route("/result")
 def result():
-    return render_template('result.html')
+    
+    conn = sqlite3.connect('service.db')
+    c = conn.cursor()
+    c.execute("select * from user")
+    user_result2 = c.fetchall()
+    conn.close()
+    return render_template("result.html", tpl_user_result=user_result)
+
+
+
 
 
 # GET  /register => 登録画面を表示
@@ -285,7 +298,7 @@ def search():
     conn = sqlite3.connect('service.db')
     c = conn.cursor()
     c.execute(
-        "select id from user where hobby = ? and address = ? and age = ?", (hobby_1, address, age)
+        "select * from user where hobby_1 = ? or hobby_2 = ? or address = ? or age = ?", (hobby, hobby, address, age))
     user_result = c.fetchall()
     conn.close()
     # DBから取得してきたuser_id、ここの時点ではタプル型
@@ -298,6 +311,16 @@ def search():
     # else:
     #     session['user_id'] = user_id[0]
     #     return redirect("/userlist")
+    print(user_result)
+    return render_template("result.html")
+
+    
+
+
+
+
+
+
 
 
 @app.route("/message")

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<header>
+  <h1>マイページ</h1>
+</header>
+
+
+
+
+<div class="main">
+  <form action="/register" method="post">
+
+    <input type="file" name="avatar">
+
+    <table>
+      <tr>
+        <th>名前</th>
+        <td><input name="name" type="text"></td>
+
+      </tr>
+      <tr>
+        <th>PASS</th>
+        <td><input name="password" type="password"></td>
+      </tr>
+      <tr>
+        <th>住まい</th>
+        <td><input name="addrss" type="text"></td>
+      </tr>
+      <tr>
+        <th>年齢</th>
+        <td><input name="age" type="text"></td>
+      </tr>
+      <tr>
+        <th>性別</th>
+        <td><input name="sex" type="text"></td>
+      </tr>
+      <tr>
+        <th>趣味①</th>
+        <td><input name="hobby_1" type="text"></td>
+      </tr>
+      <tr>
+        <th>趣味②</th>
+        <td><input name="hobby_2" type="text"></td>
+      </tr>
+    </table>
+
+    <input type="submit" name="save" value="登録">
+  </form>
+
+
+
+
+  <a href="/login">登録されている方はこちら</a>
+
+  <!-- <a href="/login">登録されている方はこちら</a> -->
+
+
+  <!-- <a href="/login">登録されている方はこちら</a> -->
+
+
+</div>
+
+<footer>
+  <ul>
+    <a href="/search">
+      <li class="fas fa-search"></li>
+    </a>
+    <a href="/chatroom">
+      <li class="far fa-comment-dots"></li>
+    </a>
+    <a href="/mypage">
+      <li class="far fa-user-circle"></li>
+    </a>
+  </ul>
+</footer>
+
+
+
+{% endblock %}

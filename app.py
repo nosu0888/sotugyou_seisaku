@@ -321,42 +321,111 @@ def get_save_path():
 
 # ---------ここからchat機能---------
 
+@app.route("/")
+def jump():
+    # ここにチャットルーム一覧をDBからとって、表示するプログラム
+    return redirect("/login")
+
+
 @app.route("/chatroom")
-def chatroom():
-    #ここにチャットルーム一覧をDBからとって、表示するプログラム
-    return render_template("dbtest.html", tpl_user_info=user_info)
-
-    # flasktest.dbに接続
-    conn = sqlite3.connect("service.db")
-    # DBの中を操作できるようにする
+def chatroom_get():
+    my_id = session["user_id"]
+    # ここにチャットルーム一覧をDBからとって、表示するプログラム
+    conn = sqlite3.connect('chattest.db')
     c = conn.cursor()
-    # SQLを実行（DBから値を取得）
-    c.execute("select chat_id, to_user_id, from_user_id, message from uchatmessage where id = 1")
-    # 取得した値を変数に代入
-    user_info = c.fetchone()
-    # DBとの接続を終える
+    c.execute(
+        "select id, room from chat where user_id1 = ? or user_id2 = ?", (my_id, my_id))
+    chat_list = c.fetchall()
+
+    return render_template("/chatroom.html", tpl_chat_list=chat_list)
+
+
+@app.route("/chatroom/<int:other_id>", methods=["POST"])
+def chatroom_post(other_id):
+
+    # まずはチャットルームがあるかchatidをとってくる
+    my_id = session["user_id"]
+    print(my_id)
+    conn = sqlite3.connect('chattest.db')
+    c = conn.cursor()
+    c.execute(
+        "select id from chat where (user_id1 = ? and user_id2 = ?) or (user_id1 = ? and user_id2 = ?)", (my_id, other_id, other_id, my_id))
+    chat_id = c.fetchone()
+
+    print(chat_id)
+    # なければ作成、あればスルー
+    if chat_id == None:
+
+        c.execute("select name from user where id = ?", (my_id,))
+        myname = c.fetchone()[0]
+        c.execute("select name from user where id = ?", (other_id,))
+        othername = c.fetchone()[0]
+        room = myname + "と" + othername + "のチャット"
+
+        c.execute("insert into chat values(null,?,?,?)",
+                  (my_id, other_id, room))
+        conn.commit()
+        c.execute(
+            "select id from chat where (user_id1 = ? and user_id2 = ?) or (user_id1 = ? and user_id2 = ?)", (my_id, other_id, other_id, my_id))
+        chat_id = c.fetchone()
+    conn.close()
+    print(chat_id)
+    return redirect("/chat/{}".format(chat_id[0]))
+
+
+@app.route("/chat/<int:chatid>")
+def chat_get(chatid):
+    # ここにチャットをDBからとって、表示するプログラム
+    conn = sqlite3.connect('chattest.db')
+    c = conn.cursor()
+    c.execute(
+        "select chatmess.to_user, chatmess.from_user, chatmess.message, user.name from chatmess inner join user on chatmess.from_user = user.id where chat_id = ?", (chatid,))
+    chat_fetch = c.fetchall()
+    chat_info = []
+    for chat in chat_fetch:
+        chat_info.append(
+            {"to": chat[0], "from": chat[1], "message": chat[2], "fromname": chat[3]})
+    c.execute("select room from chat where id = ?", (chatid,))
+    room_name = c.fetchone()[0]
     c.close()
-    # DBから値が取れているかターミナル上で確認
-    print(user_info)
-
-    return render_template("dbtest.html", tpl_user_info=user_info)
+    return render_template("chat.html", chat_list=chat_info, link_chatid=chatid, tpl_room_name=room_name)
 
 
-@app.route("/chat/<int:id>")
-def chat_get():
-    return render_template("dbtest.html", tpl_user_info=user_info)
+@app.route("/chat/<int:chatid>", methods=["POST"])
+def chat_post(chatid):
+    # ここにチャットの送信ボタンが押されたときにDBに格納するプログラム
+    my_id = session["user_id"]
+    chat_message = request.form.get("input_message")
+    conn = sqlite3.connect('chattest.db')
+    c = conn.cursor()
+    c.execute(
+        "select user_id1, user_id2 from chat where id = ?", (chatid,))
+    chat_user = c.fetchone()
+    print(chat_user)
+    if my_id != chat_user[0]:
+        to_id = chat_user[0]
+    else:
+        to_id = chat_user[1]
+    print(to_id)
+    c.execute("insert into chatmess values(null,?,?,?,?)",
+              (chatid, to_id, my_id, chat_message))
+    conn.commit()
+    c.close()
 
-    #ここにチャットをDBからとって、表示するプログラム
-
-    return render_template("dbtest.html", tpl_user_info=user_info)
+    return redirect("/chat/{}".format(chatid))
 
 
-@app.route("/chat/<int:id>", methods=["POST"])
-def chat_post():
-    #ここにチャットの送信ボタンが押された時にDBに格納するプログラム
-    return render_template("dbtest.html", tpl_user_info=user_info)
-
-    return render_template("dbtest.html", tpl_user_info=user_info)
+@app.route("/userlist")
+def chat():
+    if "user_id" in session:
+        conn = sqlite3.connect('chattest.db')
+        c = conn.cursor()
+        c.execute("select id, name from user")
+        user_info = c.fetchall()
+        conn.close()
+        return render_template("userlist.html", tpl_user_info=user_info)
+    else:
+        redirect("/login")
 
 # ---------ここまでchat機能---------
 

@@ -7,6 +7,7 @@
   <h1>新規登録画面</h1>
 </header>
 
+<<<<<<< HEAD
 
 
 
@@ -19,6 +20,18 @@
     <tr>
       <th>名前</th>
       <td><input name="name" type="text"></td>
+=======
+<form action="/upload" method="POST" enctype="multipart/form-data"></form>
+<input type="file" name="upload"><br>
+<input type="submit" value="画像アップロード"><br>
+
+<div>
+  <form action="/register" method="post">
+    <table>
+      <tr>
+        <th>名前</th>
+        <td><input name="name" type="text"></td>
+>>>>>>> 37c659a933904b738990a6ec4764997d5ac4bd1c
       </tr>
       <tr>
         <th>PASS</th>
@@ -44,14 +57,21 @@
         <th>趣味②</th>
         <td><input name="hobby_2" type="text"></td>
       </tr>
-      </table>
+    </table>
 
 
+<<<<<<< HEAD
   <input type="submit" name="save" value="登録">
 
 </form>
 
 <!-- <a href="/login">登録されている方はこちら</a> -->
+=======
+    <input type="submit" name="save" value="登録">
+  </form>
+
+  <a href="/login">登録されている方はこちら</a>
+>>>>>>> 37c659a933904b738990a6ec4764997d5ac4bd1c
 
 </div>
 

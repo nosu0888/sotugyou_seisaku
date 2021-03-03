@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<article>
+    <section id="sec2">
+        <!-- <h1>月木でわかる <br> HTML5 &amp; CSS3</h1> -->
+    </section>
+    <div>
+
+        <form action="/result" method="post" name="form2">
+            <table>
+                <a href="/message"><i class="far fa-thumbs-up"></i></a>
+                <tr>
+                    <th>名前</th>
+                    <td><input name="name" type="text"></td>
+                </tr>
+                <tr>
+                    <th>住まい</th>
+                    <td><input name="pass" type="pass"></td>
+                </tr>
+                <tr>
+                    <th>年齢</th>
+                    <td><input name="pass" type="pass"></td>
+                </tr>
+            </table>
+
+        </form>
+
+    </div>
+
+</article>
+
+<script>
+    function submit() {
+        form1.submit();
+
+    }
+</script>
+
+{% endblock %}

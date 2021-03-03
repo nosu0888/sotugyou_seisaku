@@ -13,7 +13,7 @@ from datetime import datetime
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template("register.html")
 
 @app.route('/result')
 def result():
@@ -324,6 +324,7 @@ def get_save_path():
 @app.route("/chatroom")
 def chatroom():
     #ここにチャットルーム一覧をDBからとって、表示するプログラム
+    return render_template("dbtest.html", tpl_user_info=user_info)
 
     # flasktest.dbに接続
     conn = sqlite3.connect("service.db")
@@ -343,6 +344,8 @@ def chatroom():
 
 @app.route("/chat/<int:id>")
 def chat_get():
+    return render_template("dbtest.html", tpl_user_info=user_info)
+
     #ここにチャットをDBからとって、表示するプログラム
 
     return render_template("dbtest.html", tpl_user_info=user_info)
@@ -351,6 +354,7 @@ def chat_get():
 @app.route("/chat/<int:id>", methods=["POST"])
 def chat_post():
     #ここにチャットの送信ボタンが押された時にDBに格納するプログラム
+    return render_template("dbtest.html", tpl_user_info=user_info)
 
     return render_template("dbtest.html", tpl_user_info=user_info)
 
@@ -362,6 +366,7 @@ def mistake403(code):
     return 'There is a mistake in your url!'
 
 
+
 @app.errorhandler(404)
 def notfound(code):
     return "404だよ！！見つからないよ！！！"
@@ -370,8 +375,5 @@ def notfound(code):
 # __name__ というのは、自動的に定義される変数で、現在のファイル(モジュール)名が入ります。 ファイルをスクリプトとして直接実行した場合、 __name__ は __main__ になります。
 if __name__ == "__main__":
     # Flask が持っている開発用サーバーを、実行します。
-<<<<<<< HEAD
     app.run( host='0.0.0.0', port=80 , debug=True )
-=======
-    app.run( host='0.0.0.0', port=80 , debug=True)
->>>>>>> b48988f559c8bdcfb7866f0bffba1411d6303823
+

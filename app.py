@@ -13,7 +13,7 @@ from datetime import datetime
 
 @app.route('/')
 def index():
-    return render_template("register.html")
+    return render_template("index.html")
 
 @app.route('/result')
 def result():
@@ -57,6 +57,29 @@ def regist_get():
 
 @app.route("/register", methods=["post"])
 def register_post():
+
+
+
+    
+    upload = request.files['avatar']
+    # uploadで取得したファイル名をlower()で全部小文字にして、ファイルの最後尾の拡張子が'.png', '.jpg', '.jpeg'ではない場合、returnさせる。
+    if not upload.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+        return 'png,jpg,jpeg形式のファイルを選択してください'
+    
+    # 下の def get_save_path()関数を使用して "./static/img/" パスを戻り値として取得する。
+    save_path = get_save_path()
+    # パスが取得できているか確認
+    print(save_path)
+    # ファイルネームをfilename変数に代入
+    filename = upload.filename
+    # 画像ファイルを./static/imgフォルダに保存。 os.path.join()は、パスとファイル名をつないで返してくれます。
+    upload.save(os.path.join(save_path,filename))
+    # ファイル名が取れることを確認、あとで使うよ
+    print(filename)
+
+
+
+
     input_name = request.form.get("name")
     input_password = request.form.get("password")
     input_addrss = request.form.get("addrss")
@@ -66,7 +89,7 @@ def register_post():
     input_hobby_2 = request.form.get("hobby_2")
     conn = sqlite3.connect('service.db')
     c = conn.cursor()
-    c.execute("insert into user values(null, ?,?,?,?,?,?,?,'no_img.png')",(input_name,input_password,input_addrss,input_age,input_sex,input_hobby_1,input_hobby_2))
+    c.execute("insert into user values(null, ?,?,?,?,?,?,?,?)",(input_name,input_password,input_addrss,input_age,input_sex,input_hobby_1,input_hobby_2,filename))
     conn.commit()
     c.close()
 
@@ -295,9 +318,7 @@ def message():
 #     c.execute("update user set prof_img =? where id = ?",(filename,user_id))
 #     conn.commit()
 #     c.close()
-    # return redirect('/bbs')
-
-
+#     return redirect('/bbs')
 
 
 
@@ -312,11 +333,6 @@ def get_save_path():
 
 
     
-
-#課題4の答えはここも
-def get_save_path():
-    path_dir = "./static/img"
-    return path_dir
 
 
 # ---------ここからchat機能---------

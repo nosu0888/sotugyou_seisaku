@@ -515,10 +515,10 @@ def login():
     # user_id が NULL(PythonではNone)じゃなければログイン成功
     if user_id is None:
         # ログイン失敗すると、ログイン画面に戻す
-        return render_template("login.html")
+        return redirect("/")
     else:
         session['user_id'] = user_id[0]
-        return redirect("/userlist")
+        return redirect("/search")
 
 
 # ---------ここまでchat機能---------

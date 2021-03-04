@@ -15,9 +15,22 @@ from datetime import datetime
 def index():
     return render_template("index.html")
 
-@app.route('/result')
-def result():
-    return render_template('result.html')
+# @app.route('/result')
+# def result():
+#     return render_template('result.html')
+
+# @app.route("/result")
+# def result():
+    
+#     conn = sqlite3.connect('service.db')
+#     c = conn.cursor()
+#     c.execute("select * from user")
+#     user_result = c.fetchall()
+#     conn.close()
+#     return render_template("result.html", tpl_user_result=user_result)
+
+
+
 
 
 # GET  /register => 登録画面を表示
@@ -57,6 +70,22 @@ def regist_get():
 
 @app.route("/register", methods=["post"])
 def register_post():
+
+    upload = request.files['avatar']
+    # uploadで取得したファイル名をlower()で全部小文字にして、ファイルの最後尾の拡張子が'.png', '.jpg', '.jpeg'ではない場合、returnさせる。
+    if not upload.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+        return 'png,jpg,jpeg形式のファイルを選択してください'
+    # 下の def get_save_path()関数を使用して "./static/img/" パスを戻り値として取得する。
+    save_path = get_save_path()
+    # パスが取得できているか確認
+    print(save_path)
+    # ファイルネームをfilename変数に代入
+    filename = upload.filename
+    # 画像ファイルを./static/imgフォルダに保存。 os.path.join()は、パスとファイル名をつないで返してくれます。
+    upload.save(os.path.join(save_path,filename))
+    # ファイル名が取れることを確認、あとで使うよ
+    print(filename)
+
     input_name = request.form.get("name")
     input_password = request.form.get("password")
     input_addrss = request.form.get("addrss")
@@ -66,11 +95,11 @@ def register_post():
     input_hobby_2 = request.form.get("hobby_2")
     conn = sqlite3.connect('service.db')
     c = conn.cursor()
-    c.execute("insert into user values(null, ?,?,?,?,?,?,?,'no_img.png')",(input_name,input_password,input_addrss,input_age,input_sex,input_hobby_1,input_hobby_2))
+    c.execute("insert into user values(null, ?,?,?,?,?,?,?,?)",(input_name,input_password,input_addrss,input_age,input_sex,input_hobby_1,input_hobby_2,filename))
     conn.commit()
     c.close()
 
-    return render_template("search.html")
+    return redirect("/search")
 
 @app.route("/mypage")
 def mypage_get():
@@ -270,8 +299,45 @@ def del_task():
 
 
 @app.route('/search')
-def search():
+def search_get():
+
     return render_template("search.html")
+
+@app.route("/result", methods=["POST"])
+def search():
+    # ブラウザから送られてきたデータを受け取る
+    hobby = request.form.get("hobby")
+    address = request.form.get("address")
+    age = request.form.get("age")
+
+    # ブラウザから送られてきた name ,password を userテーブルに一致するレコードが
+    # 存在するかを判定する。レコードが存在するとuser_idに整数が代入、存在しなければ nullが入る
+    conn = sqlite3.connect('service.db')
+    c = conn.cursor()
+    c.execute(
+        "select * from user where hobby_1 = ? or hobby_2 = ? or address = ? or age = ?", (hobby, hobby, address, age))
+    user_result = c.fetchall()
+    conn.close()
+    # DBから取得してきたuser_id、ここの時点ではタプル型
+    # print(type(user_id))
+
+    # user_id が NULL(PythonではNone)じゃなければログイン成功
+    # if user_id is None:
+    #     # ログイン失敗すると、ログイン画面に戻す
+    #     return render_template("login.html")
+    # else:
+    #     session['user_id'] = user_id[0]
+    #     return redirect("/userlist")
+    print(user_result)
+    return render_template("result.html",tpl_user_result=user_result)
+
+    
+
+
+
+
+
+
 
 
 @app.route("/message")
@@ -303,14 +369,6 @@ def message():
     # return redirect('/bbs')
 
 
-
-
-
-
-def get_save_path():
-    path_dir = "./static/img"
-    print("パスを正常に取得しました")
-    return path_dir
 
 
 

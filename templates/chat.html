@@ -1,0 +1,46 @@
+<!-- <!DOCTYPE html>
+<html lang="en"> -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <h1>{{tpl_room_name}}</h1>
+    <form action="/chat/{{link_chatid}}" method="POST">
+        <input type="text" name="input_message">
+        <input type="submit" value="送信">
+    </form>
+    <div class="chatbox">
+        {% for chat in chat_list%}
+        <p>{{chat["fromname"]}}:{{chat["message"]}}</p>
+        {% endfor %}
+    </div>
+
+</body>
+
+<footer>
+    <ul>
+        <a href="/search">
+            <li class="fas fa-search"></li>
+        </a>
+        <a href="/chatroom">
+            <li class="far fa-comment-dots"></li>
+        </a>
+        <a href="/mypage">
+            <li class="far fa-user-circle"></li>
+        </a>
+    </ul>
+</footer>
+
+{% endblock %}
+
+<!-- </html> -->

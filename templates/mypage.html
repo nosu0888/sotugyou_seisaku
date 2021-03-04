@@ -4,21 +4,22 @@
 
 
 <header>
-  <h1>新規登録画面</h1>
+  <h1>マイページ</h1>
 </header>
 
 
 
 
 <div class="main">
-<form action="/register" method="post" enctype="multipart/form-data">
-  
-  <input type="file" name="avatar">
+  <form action="/register" method="post">
 
-  <table>
-    <tr>
-      <th>名前</th>
-      <td><input name="name" type="text"></td>
+    <input type="file" name="avatar">
+
+    <table>
+      <tr>
+        <th>名前</th>
+        <td><input name="name" type="text"></td>
+
       </tr>
       <tr>
         <th>PASS</th>
@@ -26,7 +27,7 @@
       </tr>
       <tr>
         <th>住まい</th>
-        <td><input name="address" type="text"></td>
+        <td><input name="addrss" type="text"></td>
       </tr>
       <tr>
         <th>年齢</th>
@@ -54,7 +55,27 @@
 
   <a href="/login">登録されている方はこちら</a>
 
+  <!-- <a href="/login">登録されている方はこちら</a> -->
+
+
+  <!-- <a href="/login">登録されている方はこちら</a> -->
+
+
 </div>
+
+<footer>
+  <ul>
+    <a href="/search">
+      <li class="fas fa-search"></li>
+    </a>
+    <a href="/chatroom">
+      <li class="far fa-comment-dots"></li>
+    </a>
+    <a href="/mypage">
+      <li class="far fa-user-circle"></li>
+    </a>
+  </ul>
+</footer>
 
 
 

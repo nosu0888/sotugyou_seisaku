@@ -9,27 +9,39 @@
 <table>
     <tr>
         <th>趣味</th>
-        <td><input name="name" type="text"></td>
+        <td><input name="hobby" type="text"></td>
     </tr>
     <tr>
         <th>住まい</th>
-        <td><input name="name" type="text"></td>
+        <td><input name="address" type="text"></td>
     </tr>
     <tr>
         <th>年齢</th>
-        <td><input name="name" type="text"></td>
+        <td><input name="age" type="text"></td>
     </tr>
 </table>
 
 <div>
-    <a href="/logout">ログアウト</a>
+    <a href="/result">検索</a>
+    <form action="/result" method="POST">
+        趣味<input type="text" name="hobby">
+        住まい<input type="text" name="address">
+        年齢<input type="text" name="age">
+        <input type="submit" value="検索">
+    </form>
 </div>
 
 <footer>
     <ul>
-        <a href="/bbs"><li class="fas fa-search"></li></a>
-        <li class="far fa-comment-dots"><a href="#sec2"></a></li>
-        <li class="far fa-user-circle"><a href="#sec3"></a></li>
+        <a href="/search">
+            <li class="fas fa-search"></li>
+        </a>
+        <a href="/chatroom">
+            <li class="far fa-comment-dots"></li>
+        </a>
+        <a href="/mypage">
+            <li class="far fa-user-circle"></li>
+        </a>
     </ul>
 </footer>
 

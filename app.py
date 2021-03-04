@@ -19,15 +19,15 @@ def index():
 # def result():
 #     return render_template('result.html')
 
-@app.route("/result")
-def result():
+# @app.route("/result")
+# def result():
     
-    conn = sqlite3.connect('service.db')
-    c = conn.cursor()
-    c.execute("select * from user")
-    user_result2 = c.fetchall()
-    conn.close()
-    return render_template("result.html", tpl_user_result=user_result)
+#     conn = sqlite3.connect('service.db')
+#     c = conn.cursor()
+#     c.execute("select * from user")
+#     user_result = c.fetchall()
+#     conn.close()
+#     return render_template("result.html", tpl_user_result=user_result)
 
 
 
@@ -70,6 +70,22 @@ def regist_get():
 
 @app.route("/register", methods=["post"])
 def register_post():
+
+    upload = request.files['avatar']
+    # uploadで取得したファイル名をlower()で全部小文字にして、ファイルの最後尾の拡張子が'.png', '.jpg', '.jpeg'ではない場合、returnさせる。
+    if not upload.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+        return 'png,jpg,jpeg形式のファイルを選択してください'
+    # 下の def get_save_path()関数を使用して "./static/img/" パスを戻り値として取得する。
+    save_path = get_save_path()
+    # パスが取得できているか確認
+    print(save_path)
+    # ファイルネームをfilename変数に代入
+    filename = upload.filename
+    # 画像ファイルを./static/imgフォルダに保存。 os.path.join()は、パスとファイル名をつないで返してくれます。
+    upload.save(os.path.join(save_path,filename))
+    # ファイル名が取れることを確認、あとで使うよ
+    print(filename)
+
     input_name = request.form.get("name")
     input_password = request.form.get("password")
     input_addrss = request.form.get("addrss")
@@ -79,11 +95,11 @@ def register_post():
     input_hobby_2 = request.form.get("hobby_2")
     conn = sqlite3.connect('service.db')
     c = conn.cursor()
-    c.execute("insert into user values(null, ?,?,?,?,?,?,?,'no_img.png')",(input_name,input_password,input_addrss,input_age,input_sex,input_hobby_1,input_hobby_2))
+    c.execute("insert into user values(null, ?,?,?,?,?,?,?,?)",(input_name,input_password,input_addrss,input_age,input_sex,input_hobby_1,input_hobby_2,filename))
     conn.commit()
     c.close()
 
-    return render_template("search.html")
+    return redirect("/search")
 
 @app.route("/mypage")
 def mypage_get():
@@ -284,9 +300,10 @@ def del_task():
 
 @app.route('/search')
 def search_get():
+
     return render_template("search.html")
 
-@app.route("/search", methods=["POST"])
+@app.route("/result", methods=["POST"])
 def search():
     # ブラウザから送られてきたデータを受け取る
     hobby = request.form.get("hobby")
@@ -312,7 +329,7 @@ def search():
     #     session['user_id'] = user_id[0]
     #     return redirect("/userlist")
     print(user_result)
-    return render_template("result.html")
+    return render_template("result.html",tpl_user_result=user_result)
 
     
 
@@ -352,14 +369,6 @@ def message():
     # return redirect('/bbs')
 
 
-
-
-
-
-def get_save_path():
-    path_dir = "./static/img"
-    print("パスを正常に取得しました")
-    return path_dir
 
 
 
@@ -529,4 +538,5 @@ def notfound(code):
 # __name__ というのは、自動的に定義される変数で、現在のファイル(モジュール)名が入ります。 ファイルをスクリプトとして直接実行した場合、 __name__ は __main__ になります。
 if __name__ == "__main__":
     # Flask が持っている開発用サーバーを、実行します。
-    app.run( host='0.0.0.0', port=80 , debug=True)
+    app.run( host='0.0.0.0', port=80 , debug=True )
+

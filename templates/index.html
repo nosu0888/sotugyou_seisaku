@@ -10,7 +10,7 @@
 
 	<div>
 
-		<form action="/register" method="post" name="form1">
+		<form action="/login" method="post" name="form1">
 			<table>
 				<tr>
 					<th>名前</th>
@@ -18,21 +18,22 @@
 				</tr>
 				<tr>
 					<th>PASS</th>
-					<td><input name="pass" type="pass"></td>
+					<td><input name="password" type="pass"></td>
 				</tr>
 			</table>
 
+			<input type="submit" name="save" value="ログイン">
+		</form>
 
 	</div>
 
 
 	<div id="submitbtn">
 		<a href="/register" class="btn">NEW</a>
-		<a href="javascript:submit()" class="btn">LOGIN</a>
 	</div>
 
 
-	</form>
+	
 
 
 

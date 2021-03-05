@@ -88,14 +88,14 @@ def register_post():
 
     input_name = request.form.get("name")
     input_password = request.form.get("password")
-    input_addrss = request.form.get("addrss")
+    input_address = request.form.get("address")
     input_age = request.form.get("age")
     input_sex = request.form.get("sex")
     input_hobby_1 = request.form.get("hobby_1")
     input_hobby_2 = request.form.get("hobby_2")
     conn = sqlite3.connect('service.db')
     c = conn.cursor()
-    c.execute("insert into user values(null, ?,?,?,?,?,?,?,?)",(input_name,input_password,input_addrss,input_age,input_sex,input_hobby_1,input_hobby_2,filename))
+    c.execute("insert into user values(null, ?,?,?,?,?,?,?,?)",(input_name,input_password,input_address,input_age,input_sex,input_hobby_1,input_hobby_2,filename))
     conn.commit()
     c.close()
 

@@ -2,37 +2,29 @@
 {% block content %}
 
 <header>
-    <h1>検索</h1>
+    <h1>S E A R C H </h1>
 </header>
 
-
-<table>
-    <tr>
-        <th>趣味</th>
-        <td><input name="hobby" type="text"></td>
-    </tr>
-    <tr>
-        <th>住まい</th>
-        <td><input name="address" type="text"></td>
-    </tr>
-    <tr>
-        <th>年齢</th>
-        <td><input name="age" type="text"></td>
-    </tr>
-</table>
-
 <div>
-    <a href="/result">検索</a>
-    <form action="/result" method="POST">
-        趣味<input type="text" name="hobby">
-        住まい<input type="text" name="address">
-        年齢<input type="text" name="age">
-        <input type="submit" value="検索">
+    <!-- <a href="/result">検索</a> -->
+    <form action="/result" method="POST" class="search_form">
+        <dl>
+            <dt>HOBBY</dt>
+            <dd><input type="text" name="hobby" style="height:30px;"></dd>
+            
+            <dt>LOCATION</dt>
+            <dd><input type="text" name="address" style="height:30px;"></dd>
+            
+            <dt>AGE</dt>
+            <dd><input type="text" name="age" style="height:30px;"></dd>
+        </dl>
+
+        <input type="submit" class="btn" value="search">
     </form>
 </div>
 
 <footer>
-    <ul>
+    <ul class="footer_ul">
         <a href="/search">
             <li class="fas fa-search"></li>
         </a>

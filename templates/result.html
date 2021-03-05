@@ -9,11 +9,14 @@
     <title>Document</title>
 </head>
 
+<header>
+    <h1>RESULT</h1>
+</header>
+
 <body>
-    <h1>検索結果</h1>
 
     {% for user_result in tpl_user_result %}
-    <div style="border: 1px solid black;">
+    <div class="airiroom">
         <p>{{user_result[1]}}</p>
         <form action="/chatroom/{{user_result[0]}}" method="POST">
             <input type="submit" value="チャットする">
